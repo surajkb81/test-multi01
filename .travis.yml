@@ -1,0 +1,28 @@
+sudo: required
+language: generic
+services: 
+  - docker
+
+before_install: 
+  - docker build -t surajkb81/test-multi01 -f ./client/Dockerfile.dev ./client
+
+script: 
+ - docker run -e CI=true surajkb81/test-multi01 npm run test #-- --coverage
+
+after_success: 
+  - docker build -t surajkb81/prod-multi01-client ./client
+  - docker build -t surajkb81/prod-multi01-nginx ./ngiinx
+  - docker build -t surajkb81/prod-multi01-worker ./worker
+  - docker build -t surajkb81/prod-multi01-server ./server
+
+ deploy: 
+  provider: elasticbeanstalk 
+  region: "us-west-2" # on AWS 
+  app: "dockerTest01"
+  env: "docker-env"  # environment on the AWS
+  bucket_name: "elasticbeanstalk-us-west-2-9e00" # S3 bucket name from AWS
+  bucker_path: "docker" 
+  on: 
+    branch: master 
+  access_key_id: $username
+  secret_access_key: "$Password"
