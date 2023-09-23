@@ -22,14 +22,14 @@ after_success:
   - docker push surajkb81/prod-multi01-worker
   - docker push surajkb81/prod-multi01-server
 
- #deploy: 
- # provider: elasticbeanstalk 
- # region: "us-west-2" # on AWS 
-  #app: "dockerTest01"
-  #env: "docker-env"  # environment on the AWS
-  #bucket_name: "elasticbeanstalk-us-west-2-9e00" # S3 bucket name from AWS
-  #bucker_path: "docker" 
-  #on: 
-  #  branch: master 
-  #access_key_id: $username
-  #secret_access_key: "$Password"
+ deploy: 
+  provider: elasticbeanstalk 
+  region: "us-west-2" # on AWS 
+  app: "dockerTest01"
+  env: "docker-env"  # environment on the AWS
+  bucket_name: "elasticbeanstalk-us-west-2-9e00" # S3 bucket name from AWS
+  bucker_path: "docker" 
+  on: 
+    branch: master 
+  access_key_id: $username
+  secret_access_key: "$Password"
